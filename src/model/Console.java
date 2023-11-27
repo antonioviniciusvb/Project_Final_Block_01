@@ -1,13 +1,16 @@
 package model;
 
-public class Console {
+import java.time.LocalDate;
+
+public class Console extends Product {
 
 	private int quantityjoystick;
 	private boolean cdPlayer;
 	private String model;
 
-	public Console(int quantityjoystick, boolean cdPlayer, String model) {
-		super();
+	public Console(int id, String name, int type, double price, String platform, LocalDate releaseYear,
+			int quantityjoystick, boolean cdPlayer, String model) {
+		super(id, name, type, price, platform, releaseYear);
 		this.quantityjoystick = quantityjoystick;
 		this.cdPlayer = cdPlayer;
 		this.model = model;

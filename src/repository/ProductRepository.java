@@ -9,7 +9,7 @@ public interface ProductRepository {
 	public void listAll();
 	public void findById(int id);
 	public void findByName(String name);
-	public void findByplatform(int platform);
+	public void findByplatform(String platform);
 	public void delete(int id);
 	public void update(Optional<Product> product);
 }

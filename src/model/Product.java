@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
+import project_final_block_01.util.Converter;
+
 public abstract class Product {
 
 	private int id;
@@ -73,7 +75,7 @@ public abstract class Product {
 	public String toString() {
 
 		return String.format("Id: %d\nName: %s\nType: %s\nPrice: %.2f\nPlatform: %s\nReleaseYear", getId(), getName(), getDescriptionType(),
-				getPrice(), getPlatform(), getReleaseYear());
+				getPrice(), getPlatform(), Converter.localDateToString(getReleaseYear()));
 	}
 
 }

@@ -1,7 +1,15 @@
 package project_final_block_01;
 
+import java.util.Optional;
+
+import model.Console;
+import model.Game;
+import model.Product;
+import model.controller.ProductController;
 import project_final_block_01.util.Colors;
+import project_final_block_01.util.Converter;
 import project_final_block_01.util.Input;
+import project_final_block_01.util.OutPut;
 
 public class Menu {
 
@@ -21,6 +29,8 @@ public class Menu {
 			+ "| Select the desired option:                       |\n"
 			+ "o--------------------------------------------------o";
 
+	public static ProductController productsController = new ProductController();
+
 	public static void main(String[] args) {
 
 		showMenu();
@@ -28,7 +38,7 @@ public class Menu {
 	}
 
 	private static void showMenu() {
-		
+
 		int option;
 
 		do {
@@ -41,16 +51,25 @@ public class Menu {
 
 			switch (option) {
 
-			case 1 -> System.out.println("to do - create");
+			case 1 -> productsController.register(createProduct(0, 0));
 
-			case 2 -> System.out.println("to do - List");
+			case 2 -> productsController.listAll();
 
-			case 3 -> System.out.println("to do - Find");
+			case 3 -> productsController.findById(Input.getInteger("Product Id to search:"));
 
-			case 4 -> System.out.println("to do - Update");
+			case 4 -> {
 
-			case 5 -> System.out.println("to do - Delete");
-			
+				var account = productsController.findProduct(Input.getInteger("Enter Product Id to update:"));
+
+				if (account.isPresent())
+					productsController
+							.update(Optional.of(createProduct(account.get().getId(), account.get().getType())));
+				else
+					OutPut.printFailed(productsController.errorOperation);
+			}
+
+			case 5 -> productsController.delete(Input.getInteger("Enter Product Id to delete:"));
+
 			case 6 -> System.out.println("to do - Buy");
 
 			}
@@ -58,6 +77,51 @@ public class Menu {
 			Input.systemPause();
 
 		} while (continueLoop(option));
+	}
+
+	private static Product createProduct(int productId, int productType) {
+
+		int id, type, joystick;
+		String name, platform, releaseYear, developer, model;
+		double price = 0.0d;
+		boolean cdplayer;
+
+		id = defineProductId(productId);
+		type = defineProductType(productType);
+
+		name = Input.getString("Enter the Name:");
+
+		platform = Input.getString("Enter the Plataform:");
+
+		releaseYear = Input.getString("Enter the Release Year:");
+
+		price = Input.getDouble("Enter the Product price:");
+
+		if (type == 0)
+			type = Input.getInteger("1- Game\n2- Console\nChoose Product option:");
+
+		if (type == 1) {
+
+			developer = Input.getString("Enter the developer:");
+			return new Game(id, name, type, price, platform, Converter.stringToLocalDate(releaseYear), developer);
+		} else {
+
+			model = Input.getString("Enter with the model:");
+			joystick = Input.getInteger("Enter with Quantity Joystick:");
+			cdplayer = Input.getString("Has a CD player: S/N:").toLowerCase() == "S" ? true : false;
+
+			return new Console(id, name, type, price, platform, Converter.stringToLocalDate(releaseYear), joystick,
+					cdplayer, model);
+
+		}
+	}
+
+	private static int defineProductType(int productType) {
+		return productType == 1 || productType == 2 ? productType : 0;
+	}
+
+	private static int defineProductId(int productId) {
+		return productId > 0 ? productId : productsController.generateId();
 	}
 
 	public static boolean continueLoop(int option) {
