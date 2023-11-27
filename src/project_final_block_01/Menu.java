@@ -55,7 +55,21 @@ public class Menu {
 
 			case 2 -> productsController.listAll();
 
-			case 3 -> productsController.findById(Input.getInteger("Product Id to search:"));
+			case 3 -> {
+
+				int find = Input.getInteger("1- Id\n2- Name\n3- Platform\nChoose the search method:");
+
+				if (find == 1)
+					productsController.findById(Input.getInteger("Product Id to search:"));
+				else if (find == 2)
+					productsController.findByName(Input.getString("Product Name to search:"));
+				else 
+					if (find == 3)
+					productsController.findByPlatform(Input.getString("Product Platform to search:"));
+				else
+					OutPut.printFailed("Option invalid");
+
+			}
 
 			case 4 -> {
 

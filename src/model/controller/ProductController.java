@@ -57,7 +57,7 @@ public class ProductController implements ProductRepository {
 	}
 
 	@Override
-	public void findByplatform(String platform) {
+	public void findByPlatform(String platform) {
 		
 		var product = products.stream()
 				.filter(p -> p.getPlatform().contains(platform))
@@ -80,7 +80,7 @@ public class ProductController implements ProductRepository {
 			OutPut.printfSucess("Product Id: %d successfully removed", id);
 		}else {
 			OutPut.printFailed(errorOperation);
-		}// TODO Auto-generated method stub
+		}
 		
 	}
 
