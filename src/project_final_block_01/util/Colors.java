@@ -2,7 +2,7 @@ package project_final_block_01.util;
 
 public class Colors {
 
-	public static String theme = Colors.TEXT_WHITE_BOLD_BRIGHT + Colors.TEXT_BLUE_BRIGHT;
+	public static String theme = Colors.TEXT_WHITE_BOLD_BRIGHT + Colors.TEXT_RED_BOLD_BRIGHT;
 	public static String sucess = Colors.TEXT_GREEN;
 	public static String failed = Colors.TEXT_RED;
 	
